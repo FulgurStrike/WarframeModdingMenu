@@ -1,20 +1,29 @@
 package mod;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import RankOutOfBoundsException.*;
 
 public class Mod {
 
     private final String name, rarity, polarity;
-    private final int rank, initialDrain, drainIncreaseOnRankUp;
+    private final int rank;
+    private final int maxRank;
+    private int drain;
+    private final int drainIncreaseOnRankUp;
 
     private final String[] statsEffected;
 
-    private final Double[] effectIncreaseOnRankUp, effectOnStats;
+    private final Double[] effectIncreaseOnRankUp;
+
+    private Double[]  effectOnStats;
 
     public Mod(String name,
                String rarity,
                String polarity,
                int rank,
+               int maxRank,
                int initalDrain,
                String[] statsEffected,
                Double[] effectOnStats,
@@ -26,7 +35,8 @@ public class Mod {
         this.rarity = rarity;
         this.polarity = polarity;
         this.rank = rank;
-        this.initialDrain = initalDrain;
+        this.maxRank= maxRank;
+        this.drain = initalDrain;
         this.statsEffected = statsEffected;
         this.effectOnStats = effectOnStats;
         this.effectIncreaseOnRankUp = effectIncreaseOnRankUp;
@@ -50,8 +60,8 @@ public class Mod {
         return this.rank;
     }
 
-    public int getInitialDrain() {
-        return initialDrain;
+    public int getDrain() {
+        return drain;
     }
 
     public String[] getStatsEffected() {
@@ -70,31 +80,58 @@ public class Mod {
         return this.effectOnStats;
     }
 
+
+    public void changeRank(int newRank) throws RankOutOfBoundsException{
+        ArrayList<Double> statIncreaseAfterRankUp = new ArrayList<>();
+        DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
+
+        if(newRank > this.maxRank){
+            throw new RankOutOfBoundsException();
+        }
+
+        for(int i = 0; i<effectIncreaseOnRankUp.length; i++) {
+            statIncreaseAfterRankUp.add(effectIncreaseOnRankUp[i] * newRank);
+        }
+
+        for(int i = 0; i<effectOnStats.length; i++) {
+            this.effectOnStats[i] = Double.valueOf(twoDecimalPlaces.format(this.effectOnStats[i] + statIncreaseAfterRankUp.get(i)));
+        }
+
+        this.drain = this.drain + newRank;
+    }
+
     public String toString() {
-        return "Hello";
+        return  "Name: "+this.getName()
+                +"\n"
+                +"Rarity: "+this.getRarity()
+                +"\n"
+                +"Polarity: "+this.getPolarity()
+                +"\n"
+                +"Rank: "+this.getRank()
+                +"\n"
+                +"Drain: "+this.getDrain()
+                +"\n"
+                +"Stats effected: "+Arrays.toString(this.getStatsEffected())
+                +"\n"
+                +"Effect on stats: "+Arrays.toString(this.getEffectOnStats())
+                +"\n"
+                +"Stat increase on rank up: "+Arrays.toString(this.getEffectIncreaseOnRankUp())
+                +"\n"
+                +"Drain increase on rank up: "+this.getDrainIncreaseOnRankUp();
     }
 
     public static void main(String[] args) {
-        Mod testMod = new Mod("Intensify", "Rare", "Madurai", 0, 6, new String[]{"Ability Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
+        Mod testMod = new Mod("Blind Rage", "Rare", "Madurai", 0, 10, 6, new String[]{"Ability_Strength, Ability_Efficiency"}, new Double[]{1.09, 0.95}, new Double[]{0.09, -0.05}, 1);
+        Mod testMod2 = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
 
-        System.out.println("Name: "+testMod.getName()
-        +"\n"
-        +"Rarity: "+testMod.getRarity()
-        +"\n"
-        +"Polarity: "+testMod.getPolarity()
-        +"\n"
-        +"Rank: "+testMod.getRank()
-        +"\n"
-        +"Initial Drain: "+testMod.getInitialDrain()
-        +"\n"
-        +"Stats effected: "+Arrays.toString(testMod.getStatsEffected())
-        +"\n"
-        +"Effect on stats: "+Arrays.toString(testMod.getEffectOnStats())
-        +"\n"
-        +"Stat increase on rank up: "+Arrays.toString(testMod.getEffectIncreaseOnRankUp())
-        +"\n"
-        +"Drain increase on rank up: "+testMod.getDrainIncreaseOnRankUp()
-        );
+        try{
+            testMod.changeRank(11);
+            System.out.println(testMod);
+        }catch (RankOutOfBoundsException e) {
+            System.err.println("Rank exceeds max rank of mod");
+        }
+
+
     }
 
 
