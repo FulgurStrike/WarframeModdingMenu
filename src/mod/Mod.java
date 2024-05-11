@@ -8,16 +8,22 @@ import RankOutOfBoundsException.*;
 public class Mod {
 
     private final String name, rarity, polarity;
-    private final int rank;
+    private int rank;
     private final int maxRank;
     private int drain;
     private final int drainIncreaseOnRankUp;
-
     private final String[] statsEffected;
-
     private final Double[] effectIncreaseOnRankUp;
+    private final Double[]  effectOnStats;
 
-    private Double[]  effectOnStats;
+    private enum ModEffects{
+        SHIELD_CAPACITY,
+        HEALTH,
+        ARMOUR,
+        ABILITY_STRENGTH,
+        ABILITY_DURATION,
+        ENERGY_EFFICIENCY
+    }
 
     public Mod(String name,
                String rarity,
@@ -98,6 +104,7 @@ public class Mod {
         }
 
         this.drain = this.drain + newRank;
+        this.rank = newRank;
     }
 
     public String toString() {
@@ -125,7 +132,7 @@ public class Mod {
         Mod testMod2 = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
 
         try{
-            testMod.changeRank(11);
+            testMod.changeRank(10);
             System.out.println(testMod);
         }catch (RankOutOfBoundsException e) {
             System.err.println("Rank exceeds max rank of mod");
