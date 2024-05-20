@@ -12,17 +12,19 @@ public class Mod {
     private final int maxRank;
     private int drain;
     private final int drainIncreaseOnRankUp;
-    private final String[] statsEffected;
+    private final ModEffects[] statsEffected;
     private final Double[] effectIncreaseOnRankUp;
     private final Double[]  effectOnStats;
 
-    private enum ModEffects{
+    public enum ModEffects{
         SHIELD_CAPACITY,
         HEALTH,
         ARMOUR,
+        ENERGY,
         ABILITY_STRENGTH,
         ABILITY_DURATION,
-        ENERGY_EFFICIENCY
+        ENERGY_EFFICIENCY,
+        ABILITY_RANGE
     }
 
     public Mod(String name,
@@ -43,11 +45,21 @@ public class Mod {
         this.rank = rank;
         this.maxRank= maxRank;
         this.drain = initalDrain;
-        this.statsEffected = statsEffected;
+
+        this.statsEffected = generateModEffectsArray(statsEffected);
+
         this.effectOnStats = effectOnStats;
         this.effectIncreaseOnRankUp = effectIncreaseOnRankUp;
         this.drainIncreaseOnRankUp = drainIncreaseOnRankUp;
 
+    }
+
+    private static ModEffects[] generateModEffectsArray(String[] statEffects) {
+        ModEffects[] effects = new ModEffects[statEffects.length];
+        for (int i = 0; i < statEffects.length; i++) {
+            effects[i] = ModEffects.valueOf(statEffects[i].toUpperCase());
+        }
+        return effects;
     }
 
     public String getName() {
@@ -70,7 +82,7 @@ public class Mod {
         return drain;
     }
 
-    public String[] getStatsEffected() {
+    public ModEffects[] getStatsEffected() {
         return this.statsEffected;
     }
 
@@ -128,7 +140,7 @@ public class Mod {
     }
 
     public static void main(String[] args) {
-        Mod testMod = new Mod("Blind Rage", "Rare", "Madurai", 0, 10, 6, new String[]{"Ability_Strength, Ability_Efficiency"}, new Double[]{1.09, 0.95}, new Double[]{0.09, -0.05}, 1);
+        Mod testMod = new Mod("Blind Rage", "Rare", "Madurai", 0, 10, 6, new String[]{"Ability_Strength", "Energy_Efficiency"}, new Double[]{1.09, 0.95}, new Double[]{0.09, -0.05}, 1);
         Mod testMod2 = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
 
         try{
@@ -137,9 +149,5 @@ public class Mod {
         }catch (RankOutOfBoundsException e) {
             System.err.println("Rank exceeds max rank of mod");
         }
-
-
     }
-
-
 }
