@@ -176,7 +176,7 @@ public class Warframe {
 
         Volt.applyModEffects();
 
-        System.out.println(Volt.getAbilityStrength());
+        System.out.println(Volt.getAbilityStrength() + " " + Volt.getAbilityDuration());
 
     }
 }
