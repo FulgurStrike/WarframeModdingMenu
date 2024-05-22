@@ -24,7 +24,8 @@ public class Mod {
         ABILITY_STRENGTH,
         ABILITY_DURATION,
         ENERGY_EFFICIENCY,
-        ABILITY_RANGE
+        ABILITY_RANGE,
+        SPRINT_SPEED
     }
 
     public Mod(String name,
