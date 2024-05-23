@@ -7,37 +7,43 @@ import java.util.ArrayList;
 
 public class Warframe {
 
-    private String name;
-    private int health;
-    private int sheilds;
-    private final int energy;
-    private int armour;
-    private final int BASE_ARMOUR;
-    private int modCapacity;
-    private int level;
-    private ArrayList<Mod> mods = new ArrayList<Mod>();;
+
+    private final int BASE_ARMOUR, BASE_HEALTH, BASE_SHIELDS, BASE_SPEED;
+    private final int BASE_ENERGY = 100;
+    private final int BASE_STRENGTH = 100;
+    private final int BASE_DURATION = 100;
+    private final int BASE_RANGE = 100;
+    private final int BASE_EFFICIENCY = 100;
+
+    private final String name;
+    private int health, shields, energy, armour;
+    private final int maxEnergy;
+    private int modCapacity = 0;
+    private int level = 0;
+    private ArrayList<Mod> mods = new ArrayList<Mod>();
     private int abilityStrength, abilityDuration, abilityRange, abilityEfficiency, sprintSpeed;
 
     public Warframe(String name,
-                    int health,
-                    int sheilds,
-                    int energy,
+                    int baseHealth,
+                    int baseSheilds,
                     int baseArmour,
-                    int sprintSpeed) {
+                    int sprintSpeed,
+                    int maxEnergy) {
 
         this.name = name;
-        this.health = health;
-        this.sheilds = sheilds;
+
+        this.BASE_HEALTH = baseHealth;
+        this.BASE_SHIELDS = baseSheilds;
         this.BASE_ARMOUR = baseArmour;
+
+        this.health = BASE_HEALTH;
+        this.shields = BASE_SHIELDS;
         this.armour = BASE_ARMOUR;
-        this.energy = energy;
-        this.modCapacity = 0;
-        this.level = 0;
-        this.abilityStrength = 100;
-        this.abilityDuration = 100;
-        this.abilityRange = 100;
-        this.abilityEfficiency = 100;
+        this.energy = BASE_ENERGY;
+
+        this.maxEnergy = maxEnergy;
         this.sprintSpeed = sprintSpeed;
+        this.BASE_SPEED = sprintSpeed;
     }
 
     public String getName() {
@@ -48,8 +54,8 @@ public class Warframe {
         return health;
     }
 
-    public int getSheilds() {
-        return sheilds;
+    public int getShields() {
+        return shields;
     }
 
     public int getSprintSpeed()  {
@@ -102,13 +108,13 @@ public class Warframe {
     }
 
     public void applyModEffects() {
-        this.health = 100;
-        this.sheilds = 100;
-        this.abilityStrength = 100;
-        this.abilityDuration = 100;
-        this.abilityRange = 100;
-        this.abilityEfficiency = 100;
-        this.sprintSpeed = 1;
+        this.health = this.BASE_HEALTH;
+        this.shields = this.BASE_SHIELDS;
+        this.abilityStrength = this.BASE_STRENGTH;
+        this.abilityDuration = this.BASE_DURATION;
+        this.abilityRange = this.BASE_RANGE;
+        this.abilityEfficiency = this.BASE_EFFICIENCY;
+        this.sprintSpeed = this.BASE_SPEED;
         this.armour = this.BASE_ARMOUR;
 
         for (Mod mod : mods) {
@@ -137,12 +143,16 @@ public class Warframe {
                     this.health = (int) Math.round(this.health * mod.getEffectOnStats()[i]);
                     break;
                 case SHIELD_CAPACITY:
-                    this.sheilds = (int) Math.round(this.sheilds * mod.getEffectOnStats()[i]);
+                    this.shields = (int) Math.round(this.shields * mod.getEffectOnStats()[i]);
                     break;
                 case ARMOUR:
                     this.armour = (int) Math.round(this.armour * mod.getEffectOnStats()[i]);
                 case SPRINT_SPEED:
                     this.sprintSpeed = (int) Math.round(this.sprintSpeed * mod.getEffectOnStats()[i]);
+                    break;
+                case ENERGY:
+                    this.energy = (int) Math.round(this.maxEnergy * mod.getEffectOnStats()[i]);
+
             }
         }
     }
@@ -150,7 +160,7 @@ public class Warframe {
     public String toString() {
         return this.getName() + "\n"
                 + "Health :" + this.getHealth() + "\n"
-                + "Shields :" + this.getSheilds() + "\n"
+                + "Shields :" + this.getShields() + "\n"
                 +"Health :" + this.getArmor() + "\n"
                 +"Sprint Speed: " + this.getSprintSpeed()
                 +"Ability Strength :" + this.getAbilityStrength() + "\n"
