@@ -3,7 +3,8 @@ package mod;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import RankOutOfBoundsException.*;
+
+import exceptions.RankOutOfBoundsException;
 
 public class Mod {
 
@@ -100,7 +101,7 @@ public class Mod {
     }
 
 
-    public void changeRank(int newRank) throws RankOutOfBoundsException{
+    public void changeRank(int newRank) throws RankOutOfBoundsException {
         ArrayList<Double> statIncreaseAfterRankUp = new ArrayList<>();
         DecimalFormat twoDecimalPlaces = new DecimalFormat("#.##");
 

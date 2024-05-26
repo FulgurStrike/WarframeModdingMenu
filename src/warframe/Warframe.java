@@ -1,6 +1,7 @@
 package warframe;
 
-import RankOutOfBoundsException.RankOutOfBoundsException;
+import exceptions.RankOutOfBoundsException;
+import exceptions.TooManyModsException;
 import mod.*;
 
 import java.util.ArrayList;
@@ -98,8 +99,13 @@ public class Warframe {
         return mods;
     }
 
-    public void setMod(Mod mod) {
-        this.mods.add(mod);
+    public void setMod(Mod mod) throws TooManyModsException {
+        if(this.getMods().size() < 8) {
+            this.mods.add(mod);
+        }else {
+            throw new TooManyModsException();
+        }
+
     }
 
     public void setLevel(int level) {
