@@ -17,12 +17,11 @@ public class Warframe {
     private final int BASE_EFFICIENCY = 100;
 
     private final String name;
-    private int health, shields, energy, armour;
+    private int health, shields, energy, armour, abilityStrength, abilityDuration, abilityRange, abilityEfficiency, sprintSpeed;
     private final int maxEnergy;
     private int modCapacity = 0;
     private int level = 0;
     private ArrayList<Mod> mods = new ArrayList<Mod>();
-    private int abilityStrength, abilityDuration, abilityRange, abilityEfficiency, sprintSpeed;
 
     public Warframe(String name,
                     int baseHealth,
