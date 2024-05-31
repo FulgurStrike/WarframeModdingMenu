@@ -179,7 +179,12 @@ public class Warframe {
         Mod intensify = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
         Warframe Volt = new Warframe("Volt", 100, 100, 100, 100, 1);
 
-        Volt.setMod(intensify);
+        try {
+            Volt.setMod(intensify);
+        }catch (TooManyModsException e) {
+            e.printStackTrace();
+        }
+
         System.out.println(Volt);
         Volt.applyModEffects();
         System.out.println(Volt.getAbilityStrength());

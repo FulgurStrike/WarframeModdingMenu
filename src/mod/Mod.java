@@ -122,23 +122,7 @@ public class Mod {
     }
 
     public String toString() {
-        return  "Name: "+this.getName()
-                +"\n"
-                +"Rarity: "+this.getRarity()
-                +"\n"
-                +"Polarity: "+this.getPolarity()
-                +"\n"
-                +"Rank: "+this.getRank()
-                +"\n"
-                +"Drain: "+this.getDrain()
-                +"\n"
-                +"Stats effected: "+Arrays.toString(this.getStatsEffected())
-                +"\n"
-                +"Effect on stats: "+Arrays.toString(this.getEffectOnStats())
-                +"\n"
-                +"Stat increase on rank up: "+Arrays.toString(this.getEffectIncreaseOnRankUp())
-                +"\n"
-                +"Drain increase on rank up: "+this.getDrainIncreaseOnRankUp();
+        return  "Name: "+this.getName();
     }
 
     public static void main(String[] args) {
