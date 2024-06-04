@@ -1,10 +1,17 @@
 package mod;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import exceptions.RankOutOfBoundsException;
+
+import javax.imageio.ImageIO;
 
 public class Mod {
 
@@ -16,6 +23,7 @@ public class Mod {
     private final ModEffects[] statsEffected;
     private final Double[] effectIncreaseOnRankUp;
     private final Double[]  effectOnStats;
+    private final Image image;
 
     public enum ModEffects{
         SHIELD_CAPACITY,
@@ -38,7 +46,9 @@ public class Mod {
                String[] statsEffected,
                Double[] effectOnStats,
                Double[] effectIncreaseOnRankUp,
-               int drainIncreaseOnRankUp) {
+               int drainIncreaseOnRankUp,
+               Image image) {
+
 
 
         this.name = name;
@@ -53,6 +63,7 @@ public class Mod {
         this.effectOnStats = effectOnStats;
         this.effectIncreaseOnRankUp = effectIncreaseOnRankUp;
         this.drainIncreaseOnRankUp = drainIncreaseOnRankUp;
+        this.image = image;
 
     }
 
@@ -100,6 +111,10 @@ public class Mod {
         return this.effectOnStats;
     }
 
+    public Image getImage() {
+        return this.image;
+    }
+
 
     public void changeRank(int newRank) throws RankOutOfBoundsException {
         ArrayList<Double> statIncreaseAfterRankUp = new ArrayList<>();
@@ -125,9 +140,8 @@ public class Mod {
         return  "Name: "+this.getName();
     }
 
-    public static void main(String[] args) {
-        Mod testMod = new Mod("Blind Rage", "Rare", "Madurai", 0, 10, 6, new String[]{"Ability_Strength", "Energy_Efficiency"}, new Double[]{1.09, 0.95}, new Double[]{0.09, -0.05}, 1);
-        Mod testMod2 = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
+    public static void main(String[] args) throws IOException {
+        Mod testMod = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1, ImageIO.read(new File("images/IntensifyMod.png")));
 
         try{
             testMod.changeRank(10);
@@ -135,5 +149,7 @@ public class Mod {
         }catch (RankOutOfBoundsException e) {
             System.err.println("Rank exceeds max rank of mod");
         }
+
+        System.out.println(testMod.getImage().toString());
     }
 }

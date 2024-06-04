@@ -4,6 +4,9 @@ import exceptions.RankOutOfBoundsException;
 import exceptions.TooManyModsException;
 import mod.*;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Warframe {
@@ -174,8 +177,8 @@ public class Warframe {
                 +"Energy Efficiency :" + this.getAbilityEfficiency() + "\n";
     }
 
-    public static void main(String[] args) {
-        Mod intensify = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
+    public static void main(String[] args) throws IOException {
+        Mod intensify = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1, ImageIO.read(new File("/home/fulgurstrike/Documents/WarframeModdingProject/images/IntensifyMod.png")));
         Warframe Volt = new Warframe("Volt", 100, 100, 100, 100, 1);
 
         try {
