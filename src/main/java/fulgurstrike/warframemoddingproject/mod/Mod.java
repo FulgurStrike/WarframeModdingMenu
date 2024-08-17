@@ -1,17 +1,10 @@
-package mod;
+package fulgurstrike.warframemoddingproject.mod;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import exceptions.RankOutOfBoundsException;
-
-import javax.imageio.ImageIO;
+import fulgurstrike.warframemoddingproject.exceptions.RankOutOfBoundsException;
 
 public class Mod {
 
@@ -23,7 +16,6 @@ public class Mod {
     private final ModEffects[] statsEffected;
     private final Double[] effectIncreaseOnRankUp;
     private final Double[]  effectOnStats;
-    private final Image image;
 
     public enum ModEffects{
         SHIELD_CAPACITY,
@@ -46,8 +38,7 @@ public class Mod {
                String[] statsEffected,
                Double[] effectOnStats,
                Double[] effectIncreaseOnRankUp,
-               int drainIncreaseOnRankUp,
-               Image image) {
+               int drainIncreaseOnRankUp) {
 
 
 
@@ -63,7 +54,6 @@ public class Mod {
         this.effectOnStats = effectOnStats;
         this.effectIncreaseOnRankUp = effectIncreaseOnRankUp;
         this.drainIncreaseOnRankUp = drainIncreaseOnRankUp;
-        this.image = image;
 
     }
 
@@ -111,10 +101,6 @@ public class Mod {
         return this.effectOnStats;
     }
 
-    public Image getImage() {
-        return this.image;
-    }
-
 
     public void changeRank(int newRank) throws RankOutOfBoundsException {
         ArrayList<Double> statIncreaseAfterRankUp = new ArrayList<>();
@@ -141,15 +127,13 @@ public class Mod {
     }
 
     public static void main(String[] args) throws IOException {
-        Mod testMod = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1, ImageIO.read(new File("images/IntensifyMod.png")));
+        Mod testMod = new Mod("Intensify", "Rare", "Madurai", 0, 5, 6, new String[]{"Ability_Strength"}, new Double[]{1.05}, new Double[]{0.05}, 1);
 
         try{
             testMod.changeRank(10);
             System.out.println(testMod);
         }catch (RankOutOfBoundsException e) {
-            System.err.println("Rank exceeds max rank of mod");
+            System.err.println("Rank exceeds max rank of fulgurstrike.warframemoddingproject.mod");
         }
-
-        System.out.println(testMod.getImage().toString());
     }
 }
